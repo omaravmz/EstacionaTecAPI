@@ -1,21 +1,28 @@
-import { MongoClient } from "mongodb";
+import 'dotenv/config';
+import mongoose from "mongoose";
 
 class dbClient{
-    constructor (){
+
+    constructor () {
+        this.connectDB();
+    }
+
+    async connectDB (){
         const queryString = `mongodb+srv://${process.env.USER_DB}:${process.env.PASSWORD_DB}@${process.env.SERVER_DB}/?appName=Cluster0`;
-        this.client = new MongoClient(queryString);
-        this.DBconnect();
+        await mongoose.connect(queryString, {
+            dbName: 'MiDB',
+        });
+        console.log('Connection to DB: Succesful');
      }
 
-    async DBconnect() {
+     async disconnectDB (){
         try {
-            await this.client.connect();
-            this.db = this.client.db('MiDB');
-            console.log("Succesful")
+            await mongoose.disconnect();
+            console.log("Conexión a la base de datos cerrada");
         } catch (error) {
-            console.log(error);
+            console.error("Error al cerrar la conexión: ", e);
         }
-    }
+     }
 }
 
-export default new dbClient;
+export default new dbClient();

@@ -1,0 +1,28 @@
+import mongoose from "mongoose";
+
+const spotsSchema = new mongoose.Schema({
+    spot_num: {
+        type: String,
+        required: true,
+    },
+    zone: {
+        type: String,
+        required: true,
+    },
+    status: {
+        type: String,
+        required: true,
+        enum: [
+            'occupied', 'available', 'blocked'
+        ],
+    },
+    sensor_ID: {
+        type: String,
+        required: true,
+    }
+
+    }, { timestamps: true}
+
+);
+
+export default mongoose.model('spots', spotsSchema);

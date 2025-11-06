@@ -1,6 +1,7 @@
 import express from 'express';
 import 'dotenv/config';
 import spotsRoutes from './routes/spots.js';
+import dbClient from './config/dbClient.js';
 
 const app = express();
 
@@ -19,3 +20,8 @@ try {
 } catch(error) {
     console.log(error);
 }
+
+process.on('SIGINT', async () => {
+    dbClient.disconnectDB();
+    process.exit(0);
+});
