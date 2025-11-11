@@ -56,4 +56,4 @@ class spotsModel {
 
 }
 
-export default new spotsModel;
+export default new spotsModel();

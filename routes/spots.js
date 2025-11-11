@@ -15,3 +15,5 @@ route.delete("/:id", spotsController.removeSpot);
 route.put("/:id/status", spotsController.updateSpotStatus);
 
 export default route;
+
+

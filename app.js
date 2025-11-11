@@ -1,15 +1,18 @@
 import express from 'express';
 import 'dotenv/config';
-import spotsRoutes from './routes/spots.js';
 import dbClient from './config/dbClient.js';
+import usersRoutes from './routes/users.js';
+import spotsRoutes from './routes/spots.js';
+import sensorsRoutes from './routes/sensors.js'
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/users', usersRoutes);
 app.use('/spots', spotsRoutes);
-
+app.use('/sensors', sensorsRoutes);
 
 try {
     const port = process.env.PORT || 3000;
