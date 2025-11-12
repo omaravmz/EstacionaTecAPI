@@ -46,7 +46,7 @@ class spotsController {
 
     async updateSpotStatus(req, res) {
         try {
-            const { id } = req.params;
+            const { spot_num } = req.params;
             const { status } = req.body;
 
             const validStatuses = ["available", "occupied", "blocked"];
@@ -54,7 +54,7 @@ class spotsController {
                 return res.status(400).json({ error: "Invalid status value" });
             }
 
-            const data = await spotsModel.updateSpotStatus(id, status);
+            const data = await spotsModel.updateSpotStatus(spot_num, status);
 
             if (!data) {
                 return res.status(404).json({ error: "Spot not found" });

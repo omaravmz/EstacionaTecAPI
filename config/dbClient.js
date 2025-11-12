@@ -10,7 +10,7 @@ class dbClient{
     async connectDB (){
         const queryString = `mongodb+srv://${process.env.USER_DB}:${process.env.PASSWORD_DB}@${process.env.SERVER_DB}/?appName=Cluster0`;
         await mongoose.connect(queryString, {
-            dbName: 'MiDB',
+            dbName: 'EstacionaTecDB',
         });
         console.log('Connection to DB: Succesful');
      }

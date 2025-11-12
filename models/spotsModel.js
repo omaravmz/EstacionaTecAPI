@@ -19,8 +19,8 @@ class spotsModel {
         return await Spot.findOneAndUpdate( {_id: new mongoose.Types.ObjectId(id)}, spot, {new: true});
     }
 
-    async updateSpotStatus(id, status){
-        return await Spot.findOneAndUpdate( {_id: new mongoose.Types.ObjectId(id)}, { status }  , {new: true});
+    async updateSpotStatus(spot_num, status){
+        return await Spot.findOneAndUpdate( { spot_num: spot_num }, { status }  , {new: true});
     }
 
     async removeSpot(id){

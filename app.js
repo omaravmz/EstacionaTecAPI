@@ -4,6 +4,7 @@ import dbClient from './config/dbClient.js';
 import usersRoutes from './routes/users.js';
 import spotsRoutes from './routes/spots.js';
 import sensorsRoutes from './routes/sensors.js'
+import reportsRoutes from './routes/reports.js'
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/users', usersRoutes);
 app.use('/spots', spotsRoutes);
 app.use('/sensors', sensorsRoutes);
+app.use('/reports', reportsRoutes);
 
 try {
     const port = process.env.PORT || 3000;

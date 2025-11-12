@@ -4,21 +4,23 @@ const spotsSchema = new mongoose.Schema({
     spot_num: {
         type: String,
         required: true,
+        unique: true
     },
     zone: {
         type: String,
-        required: true,
+        required: true
     },
     status: {
         type: String,
         required: true,
         enum: [
             'occupied', 'available', 'blocked'
-        ],
+        ]
     },
     sensor_ID: {
         type: String,
         required: true,
+        unique: true
     }
 
     }, { timestamps: true}

@@ -12,7 +12,7 @@ route.get("/occupied", spotsController.getSpotsOccupied);
 route.get("/:id", spotsController.getSpot);
 route.put("/:id", spotsController.updateSpot);
 route.delete("/:id", spotsController.removeSpot);
-route.put("/:id/status", spotsController.updateSpotStatus);
+route.put("/:spot_num/status", spotsController.updateSpotStatus);
 
 export default route;
 
