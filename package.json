@@ -2,7 +2,7 @@
   "name": "estacionatecapi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,6 +24,7 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "mongodb": "^6.20.0",
-    "mongoose": "^8.19.3"
+    "mongoose": "^8.19.3",
+    "mqtt": "^5.14.1"
   }
 }

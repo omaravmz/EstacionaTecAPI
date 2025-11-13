@@ -1,13 +1,14 @@
 import express from 'express';
 import 'dotenv/config';
 import dbClient from './config/dbClient.js';
+import mqttClient from "./config/mqttClient.js";
+
 import usersRoutes from './routes/users.js';
 import spotsRoutes from './routes/spots.js';
 import sensorsRoutes from './routes/sensors.js'
 import reportsRoutes from './routes/reports.js'
 
 const app = express();
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
