@@ -1,25 +1,24 @@
 import mqtt from "mqtt";
 import spotsModel from "../models/spotsModel.js";
 
-const MQTT_BROKER_URL = "mqtt://broker.mqtt.cool:1883";
+const MQTT_BROKER_URL = "mqtt://broker.hivemq.com:1883";
 const TOPICS = [
   "estacionatec/spots",
 ];
 
-// Crear cliente MQTT
 const mqttClient = mqtt.connect(MQTT_BROKER_URL);
 
 mqttClient.on("connect", () => {
   console.log("✅ Conectado al broker MQTT:", MQTT_BROKER_URL);
 
-  // Suscribirse a los tópicos
   TOPICS.forEach((topic) => {
     mqttClient.subscribe(topic, (err) => {
       if (err) console.error("❌ Error al suscribirse a", topic);
       else console.log("📡 Suscrito a:", topic);
-    });
+    }); 
   });
 });
+
 
 mqttClient.on("message", async (topic, message) => {
   try {
@@ -34,7 +33,6 @@ mqttClient.on("message", async (topic, message) => {
       return;
     }
 
-    // ✅ Actualizar spot directamente con el modelo
     const updated = await spotsModel.updateSpotStatus(spot_num, status);
 
     if (updated) {

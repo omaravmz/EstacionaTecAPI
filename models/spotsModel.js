@@ -7,24 +7,24 @@ class spotsModel {
         return await Spot.find();
     }
 
-    async getSpot(id){
-        return await Spot.findById(id);
+    async getSpot(spot_num){
+        return await Spot.findOne( { spot_num: spot_num } );
     }
 
     async addSpot(spot){
         return await Spot.create(spot);
     }
 
-    async updateSpot(id, spot){
-        return await Spot.findOneAndUpdate( {_id: new mongoose.Types.ObjectId(id)}, spot, {new: true});
+    async updateSpot(spot_num, spot){
+        return await Spot.findOneAndUpdate( { spot_num: spot_num } , spot, {new: true});
     }
 
     async updateSpotStatus(spot_num, status){
         return await Spot.findOneAndUpdate( { spot_num: spot_num }, { status }  , {new: true});
     }
 
-    async removeSpot(id){
-        return await Spot.findOneAndDelete( {_id: new mongoose.Types.ObjectId(id)});
+    async removeSpot(spot_num){
+        return await Spot.findOneAndDelete( { spot_num: spot_num } );
     }
 
     async getStatusCount() {

@@ -17,8 +17,8 @@ class sensorsController {
     
     async getSensor(req, res) {
         try {
-            const { id } = req.params;
-            const data = await sensorsModel.getSensor(id);
+            const { sensor_ID } = req.params;
+            const data = await sensorsModel.getSensor(sensor_ID);
             res.status(201).json(data);
         } catch(error) {
             res.status(500).send(error);
@@ -36,8 +36,8 @@ class sensorsController {
 
     async updateSensor(req, res) {
         try {
-            const { id } = req.params;
-            const data = await sensorsModel.updateSensor(id, req.body);
+            const { sensor_ID } = req.params;
+            const data = await sensorsModel.updateSensor(sensor_ID, req.body);
             res.status(200).json(data);
         } catch(error) {
             res.status(500).send(error);
@@ -46,7 +46,7 @@ class sensorsController {
 
     async updateSensorStatus(req, res) {
         try {
-            const { id } = req.params;
+            const { sensor_ID } = req.params;
             const { status } = req.body;
 
             const validStatuses = ["active", "unactive"];
@@ -54,7 +54,7 @@ class sensorsController {
                 return res.status(400).json({ error: "Invalid status value" });
             }
 
-            const data = await sensorsModel.updateSensorStatus(id, status);
+            const data = await sensorsModel.updateSensorStatus(sensor_ID, status);
 
             if (!data) {
                 return res.status(404).json({ error: "Sensor not found" });
@@ -68,8 +68,8 @@ class sensorsController {
     
     async removeSensor(req, res) {
         try {
-            const { id } = req.params;
-            const data = await sensorsModel.removeSensor(id);
+            const { sensor_ID } = req.params;
+            const data = await sensorsModel.removeSensor(sensor_ID);
             res.status(206).json(data);
         } catch(error) {
             res.status(500).send(error);

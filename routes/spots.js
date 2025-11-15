@@ -9,9 +9,9 @@ route.get("/status-count", spotsController.getStatusCount);
 route.get("/available", spotsController.getSpotsAvailable);
 route.get("/occupied", spotsController.getSpotsOccupied);
 
-route.get("/:id", spotsController.getSpot);
-route.put("/:id", spotsController.updateSpot);
-route.delete("/:id", spotsController.removeSpot);
+route.get("/:spot_num", spotsController.getSpot);
+route.put("/:spot_num", spotsController.updateSpot);
+route.delete("/:spot_num", spotsController.removeSpot);
 route.put("/:spot_num/status", spotsController.updateSpotStatus);
 
 export default route;

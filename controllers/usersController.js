@@ -1,49 +1,61 @@
-import usersModel from '../models/usersModel.js'
-import bcrypt from 'bcrypt';
+import usersModel from '../models/usersModel.js';
 
 class usersController {
     constructor () {}
 
-    async register(req, res){
+    async getAll(req, res) {
         try {
-            const { email, name, password} = req.body;
-
-            const userExist = await usersModel.getUser( { email } );
-            if (userExist) {
-                return res.status(400).json({error: 'User exists'});
-            }
-            
-            const hashedPassword = await bcrypt.hash(password, 10);
-
-            const data = await usersModel.addUser({
-                email,
-                name,
-                password: hashedPassword
-            });
-
-            res.status(201).json(data);
+            const users = await usersModel.getAll();
+            res.status(200).json(users);
         } catch (error) {
             res.status(500).send(error);
         }
     }
 
-    async login(req, res){
-        const { email, password } = req.body;
-        
-        const userExist = await usersModel.getUser( { email } );
-            if (!userExist) {
-                return res.status(400).json({error: 'User does not exist'});
+    async getUserById(req, res) {
+        try {
+            const { id } = req.params;
+            const user = await usersModel.getUserById(id);
+
+            if (!user) {
+                return res.status(404).json({ error: "User not found" });
             }
 
-            const validPassword = await bcrypt.compare(password, userExist.password);
-
-            if (!validPassword) {
-                return res.status(400).json({error: 'Invalid Password'});
-            }
-
-            return res.status(200).json({msg: 'Valid User'});
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(500).send(error);
+        }
     }
 
+    async updateUser(req, res) {
+        try {
+            const { id } = req.params;
+            const user = await usersModel.updateUser(id, req.body);
+
+            if (!user) {
+                return res.status(404).json({ error: "User not found" });
+            }
+
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    }
+
+    async deleteUser(req, res) {
+        try {
+            const { id } = req.params;
+            const user = await usersModel.deleteUser(id);
+
+            if (!user) {
+                return res.status(404).json({ error: "User not found" });
+            }
+
+            res.status(200).json({ msg: "User deleted" });
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    }
 }
 
 export default new usersController();

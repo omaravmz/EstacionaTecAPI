@@ -23,7 +23,7 @@ class usersModel {
         return await User.findOneAndUpdate( {_id: new mongoose.Types.ObjectId(id)}, user, {new: true});
     }
 
-    async removeUser(id){
+    async deleteUser(id){
         return await User.findOneAndDelete( {_id: new mongoose.Types.ObjectId(id)});
     }
 

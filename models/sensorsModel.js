@@ -7,24 +7,24 @@ class sensorsModel {
         return await Sensor.find();
     }
 
-    async getSensor(id){
-        return await Sensor.findById(id);
+    async getSensor(sensor_ID){
+        return await Sensor.findOne( { sensor_ID: sensor_ID } );
     }
 
     async addSensor(sensor){
         return await Sensor.create(sensor);
     }
 
-    async updateSensor(id, sensor){
-        return await Sensor.findOneAndUpdate( {_id: new mongoose.Types.ObjectId(id)}, sensor, {new: true});
+    async updateSensor(sensor_ID, sensor){
+        return await Sensor.findOneAndUpdate( {sensor_ID: sensor_ID}, sensor, {new: true});
     }
 
-    async updateSensorStatus(id, status){
-        return await Sensor.findOneAndUpdate( {_id: new mongoose.Types.ObjectId(id)}, { status }  , {new: true});
+    async updateSensorStatus(sensor_ID, status){
+        return await Sensor.findOneAndUpdate( {sensor_ID: sensor_ID}, { status }  , {new: true});
     }
 
-    async removeSensor(id){
-        return await Sensor.findOneAndDelete( {_id: new mongoose.Types.ObjectId(id)});
+    async removeSensor(sensor_ID){
+        return await Sensor.findOneAndDelete( {sensor_ID: sensor_ID} );
     }
 
     async getStatusCount() {

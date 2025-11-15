@@ -9,10 +9,10 @@ route.get("/status-count", sensorsController.getStatusCount);
 route.get("/active", sensorsController.getSensorsActive);
 route.get("/unactive", sensorsController.getSensorsUnactive);
 
-route.get("/:id", sensorsController.getSensor);
-route.put("/:id", sensorsController.updateSensor);
-route.delete("/:id", sensorsController.removeSensor);
-route.put("/:id/status", sensorsController.updateSensorStatus);
+route.get("/:sensor_ID", sensorsController.getSensor);
+route.put("/:sensor_ID", sensorsController.updateSensor);
+route.delete("/:sensor_ID", sensorsController.removeSensor);
+route.put("/:sensor_ID/status", sensorsController.updateSensorStatus);
 
 export default route;
 
