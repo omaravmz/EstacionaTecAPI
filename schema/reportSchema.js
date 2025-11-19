@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const reportsSchema = new mongoose.Schema({
+const reportSchema = new mongoose.Schema({
     spot_num: {
         type: String,
         required: false,
@@ -26,4 +26,4 @@ const reportsSchema = new mongoose.Schema({
 
 );
 
-export default mongoose.model('reports', reportsSchema);
+export default mongoose.model('reports', reportSchema);

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const sensorsSchema = new mongoose.Schema({
+const sensorSchema = new mongoose.Schema({
     sensor_ID: {
         type: String,
         required: true,
@@ -32,4 +32,4 @@ const sensorsSchema = new mongoose.Schema({
 
 );
 
-export default mongoose.model('sensors', sensorsSchema);
+export default mongoose.model('sensors', sensorSchema);

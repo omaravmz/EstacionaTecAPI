@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import Report from '../schema/reportsSchema.js';
+import Report from '../schema/reportSchema.js';
 
-class reportsModel {
+class reportModel {
     
     async getAll(){
         return await Report.find();
@@ -12,7 +12,7 @@ class reportsModel {
     }
 
     async updateReportStatus(id, status){
-        return await Report.findOneAndUpdate( {_id: new mongoose.Types.ObjectId(id)}, { status }  , {new: true});
+        return await Report.findOneAndUpdate( {_id: new mongoose.Types.ObjectId(id)},  { status }  , {new: true});
     }
 
     async removeReport(id){
@@ -21,4 +21,4 @@ class reportsModel {
 
 }
 
-export default new reportsModel();
+export default new reportModel();

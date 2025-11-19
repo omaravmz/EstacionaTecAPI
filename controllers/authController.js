@@ -1,4 +1,4 @@
-import usersModel from '../models/usersModel.js';
+import userModel from '../models/userModel.js';
 import bcrypt from 'bcrypt';
 import { generateToken } from '../config/jwt.js';
 
@@ -14,18 +14,18 @@ class authController {
                 return res.status(400).json({ error: "Missing fields" });
             }
 
-            const userExist = await usersModel.getUser({ email });
+            const userExist = await userModel.getUser({ email });
             if (userExist) {
                 return res.status(400).json({ error: "User already exists" });
             }
 
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            const newUser = await usersModel.addUser({
+            const newUser = await userModel.addUser({
                 email,
                 name,
                 password: hashedPassword,
-                role: role || "user"
+                role: "user"
             });
 
             return res.status(201).json({
@@ -52,7 +52,7 @@ class authController {
                 return res.status(400).json({ error: "Missing fields" });
             }
 
-            const user = await usersModel.getUser({ email });
+            const user = await userModel.getUser({ email });
             if (!user) {
                 return res.status(400).json({ error: "User does not exist" });
             }

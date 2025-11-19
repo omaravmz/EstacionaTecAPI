@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import Spot from '../schema/spotsSchema.js';
+import Spot from '../schema/spotSchema.js';
 
-class spotsModel {
+class spotModel {
     
     async getAll(){
         return await Spot.find();
@@ -56,4 +56,4 @@ class spotsModel {
 
 }
 
-export default new spotsModel();
+export default new spotModel();

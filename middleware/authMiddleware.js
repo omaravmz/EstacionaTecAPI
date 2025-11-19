@@ -1,5 +1,5 @@
 import { verifyToken } from "../config/jwt.js";
-import usersModel from "../models/usersModel.js";
+import userModel from "../models/userModel.js";
 
 export const verifyToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -23,7 +23,7 @@ export const isAdmin = async (req, res, next) => {
     try {
         const userId = req.user.id;
 
-        const user = await usersModel.getUserById(userId);
+        const user = await userModel.getUserById(userId);
 
         if (!user) {
             return res.status(404).json({ error: "User not found." });

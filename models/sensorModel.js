@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import Sensor from '../schema/sensorsSchema.js';
+import Sensor from '../schema/sensorSchema.js';
 
-class sensorsModel {
+class sensorModel {
     
     async getAll(){
         return await Sensor.find();
@@ -56,4 +56,4 @@ class sensorsModel {
 
 }
 
-export default new sensorsModel();
+export default new sensorModel();

@@ -1,15 +1,16 @@
 import { request, response } from 'express';
-import reportsModel from '../models/reportsModel.js'
+import mongoose from "mongoose";
+import reportModel from '../models/reportModel.js'
 
-class reportsController {
+class reportController {
     constructor () {
 
     }
 
     async getAll(req, res) {
         try {
-            const data = await reportsModel.getAll();
-            res.status(201).json(data);
+            const data = await reportModel.getAll();
+            res.status(200).json(data);
         } catch(error) {
             res.status(500).send(error);
         }
@@ -17,8 +18,8 @@ class reportsController {
     
     async createReport(req, res) {
         try {
-            const data = await reportsModel.createReport(req.body);
-            res.status(201).json(data);
+            const data = await reportModel.createReport(req.body);
+            res.status(200).json(data);
         } catch (error) {
             res.status(500).send(error);
         }
@@ -34,7 +35,11 @@ class reportsController {
                 return res.status(400).json({ error: "Invalid status value" });
             }
 
-            const data = await reportsModel.updateReportStatus(id, status);
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                return res.status(400).json({ error: "Invalid report ID" });
+            }
+            
+            const data = await reportModel.updateReportStatus(id, status);
 
             if (!data) {
                 return res.status(404).json({ error: "Report not found" });
@@ -49,7 +54,7 @@ class reportsController {
     async removeReport(req, res) {
         try {
             const { id } = req.params;
-            const data = await reportsModel.removeReport(id);
+            const data = await reportModel.removeReport(id);
             res.status(206).json(data);
         } catch(error) {
             res.status(500).send(error);
@@ -58,4 +63,4 @@ class reportsController {
 
 }
 
-export default new reportsController();
+export default new reportController();

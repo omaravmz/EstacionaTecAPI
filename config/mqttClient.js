@@ -1,5 +1,5 @@
 import mqtt from "mqtt";
-import spotsModel from "../models/spotsModel.js";
+import spotsModel from "../models/spotModel.js";
 
 const MQTT_BROKER_URL = "mqtt://broker.hivemq.com:1883";
 const TOPICS = [

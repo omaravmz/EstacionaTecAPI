@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import User from '../schema/usersSchema.js';
+import User from '../schema/userSchema.js';
 
-class usersModel {
+class userModel {
     
     async getAll(){
         return await User.find();
@@ -20,7 +20,7 @@ class usersModel {
     }
 
     async updateUser(id, user){
-        return await User.findOneAndUpdate( {_id: new mongoose.Types.ObjectId(id)}, user, {new: true});
+        return await User.findOneAndUpdate( {_id: new mongoose.Types.ObjectId(id)},  user , {new: true});
     }
 
     async deleteUser(id){
@@ -29,4 +29,4 @@ class usersModel {
 
 }
 
-export default new usersModel();
+export default new userModel();

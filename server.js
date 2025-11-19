@@ -3,20 +3,20 @@ import 'dotenv/config';
 import dbClient from './config/dbClient.js';
 import mqttClient from "./config/mqttClient.js";
 
-import usersRoutes from './routes/users.js';
-import spotsRoutes from './routes/spots.js';
-import sensorsRoutes from './routes/sensors.js'
-import reportsRoutes from './routes/reports.js'
+import userRoutes from './routes/user.js';
+import spotRoutes from './routes/spot.js';
+import sensorRoutes from './routes/sensor.js'
+import reportRoutes from './routes/report.js'
 import authRoutes from "./routes/auth.js";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/users', usersRoutes);
-app.use('/spots', spotsRoutes);
-app.use('/sensors', sensorsRoutes);
-app.use('/reports', reportsRoutes);
+app.use('/users', userRoutes);
+app.use('/spots', spotRoutes);
+app.use('/sensors', sensorRoutes);
+app.use('/reports', reportRoutes);
 app.use("/auth", authRoutes);
 
 try {
