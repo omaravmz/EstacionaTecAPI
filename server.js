@@ -8,6 +8,7 @@ import spotRoutes from './routes/spot.js';
 import sensorRoutes from './routes/sensor.js'
 import reportRoutes from './routes/report.js'
 import authRoutes from "./routes/auth.js";
+import eventRoutes from "./routes/event.js"
 
 const app = express();
 app.use(express.json());
@@ -18,6 +19,7 @@ app.use('/spots', spotRoutes);
 app.use('/sensors', sensorRoutes);
 app.use('/reports', reportRoutes);
 app.use("/auth", authRoutes);
+app.use("/events", eventRoutes);
 
 try {
     const port = process.env.PORT || 3000;
