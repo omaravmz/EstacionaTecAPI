@@ -1,6 +1,6 @@
 import mqtt from "mqtt";
 import spotModel from "../models/spotModel.js";
-import eventModel from "../models/eventModel.js"; // ✅ Import agregado
+import eventModel from "../models/eventModel.js"; 
 
 const MQTT_BROKER_URL = "mqtt://broker.hivemq.com:1883";
 const TOPICS = ["estacionatec/spots"];
@@ -39,9 +39,7 @@ mqttClient.on("message", async (topic, message) => {
       console.warn("⚠️ Spot no encontrado:", spot_num);
     }
 
-    // ------------------------------------
-    // 🚀 LÓGICA DE EVENTOS AUTOMÁTICOS
-    // ------------------------------------
+    
 
     // 1️⃣ Ocupar → Crear evento nuevo si NO hay uno activo
     if (status === "occupied") {

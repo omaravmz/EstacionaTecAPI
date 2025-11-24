@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Spot from '../schema/spotSchema.js';
+import Event from "./eventModel.js";
 
 class spotModel {
     
@@ -37,13 +38,69 @@ class spotModel {
             }
         ]);
 
-        const result = { available: 0, occupied: 0, blocked: 0, total: 0 };
+        const result = { 
+            available: 0, 
+            occupied: 0, 
+            blocked: 0, 
+            total: 0,
+            occupancy_percentage: 0
+        };
+
         counts.forEach(c => {
             result[c._id] = c.count;
             result.total += c.count;
         });
 
+        if (result.total > 0) {
+            result.occupancy_percentage = (result.occupied / result.total) * 100;
+        }
+
         return result;
+    }
+
+    async getZoneOccupancy() {
+        const data = await Spot.aggregate([
+            {
+                $group: {
+                    _id: "$zone",
+                    total: { $sum: 1 },
+                    occupied: {
+                        $sum: {
+                            $cond: [{ $eq: ["$status", "occupied"] }, 1, 0]
+                        }
+                    },
+                    available: {
+                        $sum: {
+                            $cond: [{ $eq: ["$status", "available"] }, 1, 0]
+                        }
+                    },
+                    blocked: {
+                        $sum: {
+                            $cond: [{ $eq: ["$status", "blocked"] }, 1, 0]
+                        }
+                    }
+                }
+            },
+            {
+                $project: {
+                    zone: "$_id",
+                    _id: 0,
+                    total_spots: "$total",
+                    occupied: 1,
+                    available: 1,
+                    blocked: 1,
+                    occupancy_percentage: {
+                        $cond: [
+                            { $eq: ["$total", 0] },
+                            0,
+                            { $multiply: [{ $divide: ["$occupied", "$total"] }, 100] }
+                        ]
+                    }
+                }
+            }
+        ]);
+
+        return data;
     }
 
     async getSpotsAvailable() {

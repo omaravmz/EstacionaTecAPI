@@ -81,15 +81,6 @@ class spotController {
         }
     }
 
-    async getStatusCount(req, res) {
-        try {
-            const counts = await spotModel.getStatusCount();
-            res.status(200).json(counts);
-        } catch (error) {
-            res.status(500).send(error);
-        }
-    }
-
     async getSpotsAvailable(req, res) {
         try {
             const data = await spotModel.getSpotsAvailable();

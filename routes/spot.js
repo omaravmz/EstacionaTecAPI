@@ -5,7 +5,6 @@ const route = Router();
 
 route.get("/", spotController.getAll);
 route.post("/", spotController.addSpot);
-route.get("/status-count", spotController.getStatusCount);
 route.get("/available", spotController.getSpotsAvailable);
 route.get("/occupied", spotController.getSpotsOccupied);
 

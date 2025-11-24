@@ -75,6 +75,61 @@ class eventModel {
         ]);
     }
 
+    async getPeakHours(lastNDays = 7) {
+        const since = new Date();
+        since.setDate(since.getDate() - lastNDays);
+
+        return await Event.aggregate([
+            {
+                $match: {
+                    entry_time: { $gte: since }
+                }
+            },
+
+            {
+                $group: {
+                    _id: { hour: { $hour: "$entry_time" } },
+                    entries: { $sum: 1 }
+                }
+            },
+
+            // Ordenar de mayor a menor
+            { $sort: { entries: -1 } }
+        ]);
+    }
+
+    async getMostUsedZones() {
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+        const result = await Event.aggregate([
+            {
+                $match: {
+                    entry_time: { $gte: sevenDaysAgo }
+                }
+            },
+            
+            {
+                $lookup: {
+                    from: "spots",
+                    localField: "spot_num",
+                    foreignField: "spot_num",
+                    as: "spot_info"
+                }
+            },
+            { $unwind: "$spot_info" }, 
+            {
+                $group: {
+                    _id: "$spot_info.zone",
+                    events_count: { $sum: 1 }
+                }
+            },
+            { $sort: { events_count: -1 } }
+        ]);
+
+        return result;
+    }
+
 }
 
 export default new eventModel();
