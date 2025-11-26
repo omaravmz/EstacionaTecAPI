@@ -27,6 +27,10 @@ class userModel {
         return await User.findOneAndDelete( {_id: new mongoose.Types.ObjectId(id)});
     }
 
+    async updateUserRoleByEmail(email, role){
+        return await User.findOneAndUpdate( { email: email }, { role }, {new: true});
+    }
+
 }
 
 export default new userModel();

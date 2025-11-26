@@ -57,6 +57,28 @@ class userController {
         }
     }
 
+    async updateUserRoleByEmail(req, res) {
+        try {
+            const { email } = req.params;
+            const { role } = req.body;
+
+            const validRoles = ["user", "admin"];
+            if (!validRoles.includes(role)) {
+                return res.status(400).json({ error: "Invalid role" });
+            }
+
+            const data = await userModel.updateUserRoleByEmail(email, role);
+
+            if (!data) {
+                return res.status(404).json({ error: "User not found" });
+            }
+
+            res.status(200).json(data);
+        } catch(error) {
+            res.status(500).send(error);
+        }
+    }
+
 }
 
 export default new userController();
