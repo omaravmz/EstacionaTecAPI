@@ -4,9 +4,6 @@ import eventModel from "../models/eventModel.js";
 
 class StatsController {
 
-    // -------------------------------
-    // 1. Porcentaje de ocupación global
-    // -------------------------------
     async getStatusCount(req, res) {
         try {
             const data = await spotModel.getStatusCount();
@@ -17,9 +14,6 @@ class StatsController {
         }
     }
 
-    // -------------------------------
-    // 2. Eventos agrupados por día
-    // -------------------------------
     async getEventsByDay(req, res) {
         try {
             const data = await eventModel.getEventsByDay();
@@ -30,9 +24,6 @@ class StatsController {
         }
     }
 
-    // -------------------------------
-    // 3. Ocupación por zona
-    // -------------------------------
     async getZoneOccupancy(req, res) {
         try {
             const data = await spotModel.getZoneOccupancy();
@@ -43,9 +34,6 @@ class StatsController {
         }
     }
 
-    // -------------------------------
-    // 4. Zonas más usadas últimos 7 días
-    // -------------------------------
     async getMostUsedZones(req, res) {
         try {
             const data = await eventModel.getMostUsedZones();
@@ -56,9 +44,6 @@ class StatsController {
         }
     }
 
-    // -------------------------------
-    // 5. Duración promedio
-    // -------------------------------
     async getAverageDuration(req, res) {
         try {
             const data = await eventModel.getAverageDuration();
@@ -69,9 +54,6 @@ class StatsController {
         }
     }
 
-    // -------------------------------
-    // 6. Horas pico (param: ?days=7)
-    // -------------------------------
     async getPeakHours(req, res) {
         try {
             let { days } = req.query;
@@ -82,7 +64,7 @@ class StatsController {
                     return res.status(400).json({ error: "Parameter 'days' must be a positive number" });
                 }
             } else {
-                days = 7; // default
+                days = 7; 
             }
 
             const data = await eventModel.getPeakHours(days);
@@ -93,6 +75,17 @@ class StatsController {
             return res.status(500).json({ error: "Error retrieving peak hours" });
         }
     }
+    
+    async getBadParkingSpots(req, res) {
+        try {
+            const data = await spotModel.getBadParkingSpots();
+            res.status(200).json(data);
+        } catch (error) {
+            console.error("Error in getBadParkingSpots:", error);
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+
 }
 
 export default new StatsController();

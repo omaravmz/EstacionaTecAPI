@@ -23,7 +23,35 @@ mqttClient.on("message", async (topic, message) => {
     const payload = JSON.parse(message.toString());
     console.log(`📥 Mensaje recibido [${topic}]:`, payload);
 
-    const { spot_num, status } = payload;
+    const { spot_num, status, incident } = payload;
+
+    if (payload.incident) {
+      try {
+        const incidentValue =
+          payload.incident === "badparking" || payload.incident === "bad parking"
+            ? "badparking"
+            : "none";
+
+        const updatedIncident = await spotModel.updateParkingIncident(
+          payload.spot_num,
+          incidentValue
+        );
+
+        if (updatedIncident) {
+          console.log(
+            `🚨 Parking incident updated → Spot ${payload.spot_num}: ${incidentValue}`
+          );
+        } else {
+          console.warn("⚠️ Spot no encontrado para incident:", payload.spot_num);
+        }
+
+      } catch (err) {
+        console.error("❌ Error updating parking incident:", err);
+        return;
+      }
+    }
+
+
     const validStatuses = ["available", "occupied", "blocked"];
 
     if (!spot_num || !validStatuses.includes(status)) {
@@ -39,9 +67,6 @@ mqttClient.on("message", async (topic, message) => {
       console.warn("⚠️ Spot no encontrado:", spot_num);
     }
 
-    
-
-    // 1️⃣ Ocupar → Crear evento nuevo si NO hay uno activo
     if (status === "occupied") {
       const active = await eventModel.getActiveEventBySpot(spot_num);
 
@@ -61,7 +86,6 @@ mqttClient.on("message", async (topic, message) => {
       console.log(`🟣 Evento creado para spot ${spot_num}`, created);
     }
 
-    // 2️⃣ Disponible → Cerrar evento activo (si existe)
     if (status === "available") {
       const active = await eventModel.getActiveEventBySpot(spot_num);
 
@@ -74,10 +98,11 @@ mqttClient.on("message", async (topic, message) => {
       console.log(`🔵 Evento cerrado para spot ${spot_num}`, closed);
     }
 
-    // 3️⃣ Blocked → No crea ni cierra eventos, solo actualiza spot
     if (status === "blocked") {
       console.log(`🟥 Spot ${spot_num} bloqueado. No se registran eventos.`);
     }
+
+
 
   } catch (error) {
     console.error("❌ Error procesando mensaje MQTT:", error);

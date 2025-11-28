@@ -93,7 +93,6 @@ class eventModel {
                 }
             },
 
-            // Ordenar de mayor a menor
             { $sort: { entries: -1 } }
         ]);
     }

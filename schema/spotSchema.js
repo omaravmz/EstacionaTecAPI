@@ -21,8 +21,13 @@ const spotSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
+    },
+    parking_incident: {
+      type: String,
+      enum: ["none", "badparking"],
+      default: "none",
+      required: true,
     }
-
     }, { timestamps: true}
 
 );

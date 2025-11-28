@@ -8,7 +8,6 @@ route.post("/", sensorController.addSensor);
 route.get("/status-count", sensorController.getStatusCount);
 route.get("/active", sensorController.getSensorsActive);
 route.get("/unactive", sensorController.getSensorsUnactive);
-
 route.get("/:sensor_ID", sensorController.getSensor);
 route.put("/:sensor_ID", sensorController.updateSensor);
 route.delete("/:sensor_ID", sensorController.removeSensor);

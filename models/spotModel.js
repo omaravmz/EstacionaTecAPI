@@ -111,6 +111,28 @@ class spotModel {
         return await Spot.find({ status: "occupied" });
     }
 
+    async updateParkingIncident(spot_num, incident) {
+        try {
+            return await Spot.findOneAndUpdate(
+                { spot_num },
+                { parking_incident: incident },
+                { new: true }
+            );
+        } catch (error) {
+            console.error("Error in updateParkingIncident:", error);
+            throw error;
+        }
+    }
+    
+    async getBadParkingSpots() {
+        try {
+            return await Spot.find({ parking_incident: "badparking" });
+        } catch (error) {
+            console.error("Error in getBadParkingSpots:", error);
+            throw error;
+        }
+    }
+
 }
 
 export default new spotModel();
